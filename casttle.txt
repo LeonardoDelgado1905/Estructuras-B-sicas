@@ -1,0 +1,117 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+    public class Lista {
+        public class Nodo {
+            private Nodo next;
+            private Nodo prev;
+            private int key;
+
+            public Nodo(){};
+
+            public Nodo(Nodo next, int key) {
+                this.next = next;
+                this.key = key;
+            }
+
+            public Nodo(int key) {
+                this.key = key;
+            }
+        }
+        private Nodo head;
+        private Nodo tail;
+
+        public void pushBack(int key){
+            Nodo nodo = new Nodo(key);
+            if(head == null){
+                head = nodo; tail = head; return;
+            }
+            tail.next = nodo;
+            tail = nodo;    
+        }
+
+        public void popFront(){
+            if(head != null){
+                head = head.next;
+                if(head == null) tail = null;
+            }
+            else System.out.println("Lista Vacia");        
+        }
+
+        public void imprimir(){
+            if(head != null){
+                Nodo nodo = head;
+                while(nodo != null){
+                    System.out.println(nodo.key);
+                    nodo = nodo.next;
+                }
+            }
+            else System.out.println("Lista Vacia");
+        }
+    }
+    // Complete the minimumMoves function below.
+    static int minimumMoves(String[] grid, int startX, int startY, int goalX, int goalY) {
+        
+        int fil = grid[0].length(), col = grid.length;
+        int[][] minimos = new int[fil][col];   
+        boolean[][] visit = new boolean[fil][col];   
+        int DX = {1, 0,  -1,  0};
+        int DY = {0, 1,   0, -1};
+
+        
+        Lista lista = new Lista();
+        lista.pushBack(startX); lista.pushBack(startY);
+        
+        while(lista.head != null){
+            int x = lista.head; lista.popFront();
+            int y = lista.head; lista.popFront();
+            for(int i = 0; i <  4; i++){
+                int nx = (x + DF[i] + fil)%fil; int ny = (y + DY[i] + col)%col;
+                
+                if(grid[nx][ny] != 'X')
+            }
+        }
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        String[] grid = new String[n];
+
+        for (int i = 0; i < n; i++) {
+            String gridItem = scanner.nextLine();
+            grid[i] = gridItem;
+        }
+
+        String[] startXStartY = scanner.nextLine().split(" ");
+
+        int startX = Integer.parseInt(startXStartY[0]);
+
+        int startY = Integer.parseInt(startXStartY[1]);
+
+        int goalX = Integer.parseInt(startXStartY[2]);
+
+        int goalY = Integer.parseInt(startXStartY[3]);
+
+        int result = minimumMoves(grid, startX, startY, goalX, goalY);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+    
+}
